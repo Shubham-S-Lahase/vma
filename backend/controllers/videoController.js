@@ -45,3 +45,15 @@ exports.uploadVideo = async (req, res) => {
     res.status(500).json({ message: 'Failed to upload video', error: error.message });
   }
 };
+
+
+exports.getUserVideos = async (req, res) => {
+  try {
+    const userId = req.user.id; // Assuming user ID is added via `authenticateUser` middleware
+    const videos = await Video.find({ userId });
+    res.status(200).json(videos);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Failed to fetch user videos', error: error.message });
+  }
+};
