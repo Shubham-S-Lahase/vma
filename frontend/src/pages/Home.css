@@ -1,0 +1,151 @@
+.video-upload-container {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+.video-upload-container h2 {
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 24px;
+  color: #333;
+  font-weight: bold;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #555;
+  font-size: 16px;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+}
+
+.form-group input[type="file"] {
+  padding: 5px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.updBtn {
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.updBtn:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+.updBtn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.message {
+  margin-top: 15px;
+  text-align: center;
+  color: green;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.info-message {
+  margin-top: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.info-message p {
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #555;
+}
+
+.info-message ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.info-message li {
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #555;
+}
+
+/* Responsive Design */
+
+/* Mobile Styles */
+@media (max-width: 600px) {
+  .video-upload-container {
+    margin: 10px auto;
+    padding: 10px;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    padding: 10px;
+  }
+
+  button {
+    padding: 10px;
+  }
+}
+
+/* Tablet Styles */
+@media (max-width: 768px) {
+  .video-upload-container {
+    margin: 15px auto;
+    padding: 15px;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    padding: 12px;
+  }
+
+  button {
+    padding: 12px;
+  }
+}

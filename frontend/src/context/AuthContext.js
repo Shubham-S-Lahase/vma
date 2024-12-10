@@ -6,6 +6,7 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -13,11 +14,13 @@ export const AuthProvider = ({ children }) => {
     if (savedUser ) {
       setUser (savedUser );
     }
+    setLoading(false);
   }, []);
 
   const login = (token) => {
     const decoded = jwtDecode(token); // Decode the token to get user info
-    const userData = { id: decoded.id, name: decoded.name }; // Assuming the name is included in the token payload
+    console.log('Decoded:', decoded);
+    const userData = { id: decoded.id, name: decoded.name, token };
     setUser (userData);
     localStorage.setItem("user", JSON.stringify(userData));
     navigate("/home");
@@ -32,7 +35,7 @@ export const AuthProvider = ({ children }) => {
   const isAuthenticated = !!user;
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, login, logout }}>
+    <AuthContext.Provider value={{ user, isAuthenticated, loading, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

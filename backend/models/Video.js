@@ -6,7 +6,8 @@ const videoSchema = new mongoose.Schema({
   description: { type: String },
   tags: { type: [String] },
   fileSize: { type: Number },
-  fileUrl: { type: String, required: true },
+  filePath: { type: String },
+  driveLink: { type: String },
   uploadedAt: { type: Date, default: Date.now },
 });
 

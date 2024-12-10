@@ -33,7 +33,7 @@ const AuthForm = ({ isLogin, setIsLogin, toggleModal }) => {
         toggleModal(); 
       } else {
         alert("Registration successful! Please log in.");
-        toggleModal(); 
+        setIsLogin(true); 
       }
     } catch (err) {
       console.error(err);
