@@ -1,20 +1,22 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "./VideoDetail.css";
 import withAuth from "../lib/withAuth";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import VideoPlayer from "../components/VideoPlayer";
+import VideoUpdateForm from "../components/VideoUpdateForm";
+import Toast from "../components/Toast";
 
 const VideoDetail = ({ token }) => {
   const { id } = useParams();
-  const navigate = useNavigate();
   const [video, setVideo] = useState(null);
   const [videoSrc, setVideoSrc] = useState("");
-  const [loading, setLoading] = useState(true); // For loader
+  const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
     title: "",
     description: "",
     tags: "",
   });
+  const [successMessage, setSuccessMessage] = useState("");
 
   useEffect(() => {
     const fetchVideoDetails = async () => {
@@ -32,7 +34,7 @@ const VideoDetail = ({ token }) => {
         if (!response.data.driveLink) {
           fetchVideoStream();
         } else {
-          setLoading(false); // No need to load if it's a Google Drive video
+          setLoading(false);
         }
       } catch (error) {
         console.error("Error fetching video details:", error);
@@ -43,9 +45,9 @@ const VideoDetail = ({ token }) => {
       try {
         const response = await axios.get(`/api/videos/stream/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
-          responseType: "blob", // Get the video as a blob
+          responseType: "blob",
         });
-        const videoURL = URL.createObjectURL(response.data); // Create a URL for the video blob
+        const videoURL = URL.createObjectURL(response.data);
         setVideoSrc(videoURL);
         setLoading(false);
       } catch (error) {
@@ -71,61 +73,22 @@ const VideoDetail = ({ token }) => {
         },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      alert("Video updated successfully!");
+      setSuccessMessage("Video updated successfully!");
+      setTimeout(() => setSuccessMessage(""), 3000);
     } catch (error) {
       console.error("Error updating video:", error);
+      setSuccessMessage("Error updating video.");
+      setTimeout(() => setSuccessMessage(""), 3000);
     }
   };
 
   if (!video) return <p>Loading video details...</p>;
 
   return (
-    <div className="video-detail-container">
-      <div className="video-player">
-        {loading ? (
-          <p>Loading video...</p>
-        ) : video.driveLink ? (
-          <iframe
-            src={`https://drive.google.com/file/d/${
-              video.driveLink.split("/d/")[1].split("/")[0]
-            }/preview`}
-            frameBorder="0"
-            allow="autoplay; encrypted-media"
-            allowFullScreen
-            title={video.title}
-          />
-        ) : (
-          <video
-            controls
-            src={videoSrc}
-            title={video.title}
-            onLoadedData={() => setLoading(false)} // Set loading false after video data loads
-          />
-        )}
-      </div>
-      <div className="video-details">
-        <input
-          type="text"
-          name="title"
-          value={formData.title}
-          onChange={handleInputChange}
-          placeholder="Title"
-        />
-        <textarea
-          name="description"
-          value={formData.description}
-          onChange={handleInputChange}
-          placeholder="Description"
-        />
-        <input
-          type="text"
-          name="tags"
-          value={formData.tags}
-          onChange={handleInputChange}
-          placeholder="Tags (comma-separated)"
-        />
-        <button onClick={handleSave}>Save</button>
-      </div>
+    <div className="flex flex-col lg:flex-row gap-8 p-6 bg-gray-100 rounded-md shadow-md">
+      <VideoPlayer video={video} videoSrc={videoSrc} loading={loading} />
+      <VideoUpdateForm formData={formData} handleInputChange={handleInputChange} handleSave={handleSave} />
+      {successMessage && <Toast message={successMessage} />}
     </div>
   );
 };
