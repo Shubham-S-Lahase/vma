@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import withAuth from "../lib/withAuth";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import VideoPlayer from "../components/VideoPlayer";
 import VideoUpdateForm from "../components/VideoUpdateForm";
 import Toast from "../components/Toast";
 
 const VideoDetail = ({ token }) => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [video, setVideo] = useState(null);
   const [videoSrc, setVideoSrc] = useState("");
   const [loading, setLoading] = useState(true);
@@ -82,12 +83,34 @@ const VideoDetail = ({ token }) => {
     }
   };
 
+  const handleDelete = async () => {
+    try {
+      await axios.delete(`/api/videos/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setSuccessMessage("Video deleted successfully!");
+      setTimeout(() => {
+        setSuccessMessage("");
+        navigate("/my-videos");
+      }, 3000);
+    } catch (error) {
+      console.error("Error deleting video:", error);
+      setSuccessMessage("Error deleting video.");
+      setTimeout(() => setSuccessMessage(""), 3000);
+    }
+  };
+
   if (!video) return <p>Loading video details...</p>;
 
   return (
     <div className="flex flex-col lg:flex-row gap-8 p-6 bg-gray-100 rounded-md shadow-md">
       <VideoPlayer video={video} videoSrc={videoSrc} loading={loading} />
-      <VideoUpdateForm formData={formData} handleInputChange={handleInputChange} handleSave={handleSave} />
+      <VideoUpdateForm
+        formData={formData}
+        handleInputChange={handleInputChange}
+        handleSave={handleSave}
+        handleDelete={handleDelete}
+      />
       {successMessage && <Toast message={successMessage} />}
     </div>
   );

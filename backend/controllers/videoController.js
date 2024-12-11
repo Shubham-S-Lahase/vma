@@ -145,6 +145,37 @@ const updateVideoMetadata = async (req, res) => {
   }
 };
 
+const deleteVideo = async (req, res, gfs) => {
+  try {
+    if (!gfs) {
+      return res.status(500).json({ message: "GridFS is not initialized" });
+    }
+    
+    const { id } = req.params;
 
-module.exports = { saveVideoToDatabase, getUserVideos, getVideoDetails, updateVideoMetadata };
+    const video = await Video.findById(id);
+    if (!video) {
+      return res.status(404).json({ message: "Video not found" });
+    }
+
+    // If video has a file path, delete the file from GridFS
+    if (video.filePath) {
+      const file = await gfs.find({ filename: video.filePath }).toArray();
+      if (file.length > 0) {
+        await gfs.delete(file[0]._id);
+      }
+    }
+
+    // Delete the video from the database
+    await Video.findByIdAndDelete(id);
+
+    res.status(200).json({ message: "Video deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting video:", error);
+    res.status(500).json({ message: "Failed to delete video", error: error.message });
+  }
+};
+
+
+module.exports = { saveVideoToDatabase, getUserVideos, getVideoDetails, updateVideoMetadata, deleteVideo };
 

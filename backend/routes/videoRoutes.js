@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { saveVideoToDatabase, getUserVideos, getVideoDetails, updateVideoMetadata } = require("../controllers/videoController");
+const { saveVideoToDatabase, getUserVideos, getVideoDetails, updateVideoMetadata, deleteVideo } = require("../controllers/videoController");
 const { authenticateUser } = require("../middleware/authenticate");
 const multer = require("multer");
 const { GridFsStorage } = require("multer-gridfs-storage");
@@ -60,6 +60,8 @@ router.get("/stream/:id", authenticateUser, streamVideo);
 
 // Route to update video metadata
 router.put("/:id", authenticateUser, updateVideoMetadata);
+
+router.delete("/:id", authenticateUser, (req, res) => deleteVideo(req, res, gfs));
 
 
 module.exports = router;

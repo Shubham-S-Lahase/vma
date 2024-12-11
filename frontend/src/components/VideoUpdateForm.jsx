@@ -1,6 +1,6 @@
 import React from "react";
 
-const VideoUpdateForm = ({ formData, handleInputChange, handleSave }) => {
+const VideoUpdateForm = ({ formData, handleInputChange, handleSave, handleDelete }) => {
   return (
     <div className="flex-1 flex flex-col gap-4">
       <input
@@ -31,6 +31,12 @@ const VideoUpdateForm = ({ formData, handleInputChange, handleSave }) => {
         className="w-full bg-blue-500 text-white p-3 rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
       >
         Save
+      </button>
+      <button
+        onClick={handleDelete}
+        className="w-full bg-red-500 text-white p-3 rounded-md shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400"
+      >
+        Delete
       </button>
     </div>
   );
