@@ -93,4 +93,58 @@ const getUserVideos = async (req, res) => {
   }
 };
 
-module.exports = { saveVideoToDatabase, getUserVideos };
+const getVideoDetails = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const video = await Video.findById(id);
+    if (!video) {
+      return res.status(404).json({ message: "Video not found" });
+    }
+
+    res.status(200).json(video);
+  } catch (error) {
+    console.error("Error fetching video details:", error);
+    res.status(500).json({ message: "Failed to fetch video details" });
+  }
+};
+
+const updateVideoMetadata = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, description, tags } = req.body;
+
+    // Find the video by ID
+    const video = await Video.findById(id);
+    if (!video) {
+      return res.status(404).json({ message: "Video not found" });
+    }
+
+    // Update the fields
+    if (title) video.title = title;
+    if (description) video.description = description;
+
+    if (tags) {
+      if (Array.isArray(tags)) {
+        video.tags = tags.map((tag) => tag.trim());
+      } else {
+        video.tags = tags.split(",").map((tag) => tag.trim());
+      }
+    }
+
+    // Save the updated video
+    await video.save();
+
+    res.status(200).json({
+      message: "Video metadata updated successfully",
+      video,
+    });
+  } catch (error) {
+    console.error("Error updating video metadata:", error);
+    res.status(500).json({ message: "Failed to update video metadata", error });
+  }
+};
+
+
+module.exports = { saveVideoToDatabase, getUserVideos, getVideoDetails, updateVideoMetadata };
+

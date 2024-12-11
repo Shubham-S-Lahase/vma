@@ -4,6 +4,7 @@ import { AuthProvider } from "./context/AuthContext";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import MyVideos from "./pages/MyVideos";
+import VideoDetail from "./pages/VideoDetails";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route path="home" element={<Home />} />
             <Route path="my-videos" element={<MyVideos />} />
+            <Route path="/videos/:id" element={<VideoDetail />} />
           </Route>
         </Routes>
       </AuthProvider>

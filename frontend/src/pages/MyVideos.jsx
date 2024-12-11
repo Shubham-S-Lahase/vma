@@ -107,7 +107,6 @@ const MyVideos = ({ user, token }) => {
                   className="video-thumbnail"
                 />
                 <h3 className="video-title">{video.title}</h3>
-                <p className="video-description">{video.description}</p>
                 <p className="video-tags">Tags: {video.tags.join(', ')}</p>
               </div>
             ))
