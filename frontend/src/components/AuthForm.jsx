@@ -55,7 +55,7 @@ const AuthForm = ({ isLogin, setIsLogin, toggleModal }) => {
               value={formData.name || ""}
               onChange={handleChange}
               required
-              className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 bg-gray-100 text-gray-800"
             />
           </div>
         )}
@@ -73,7 +73,7 @@ const AuthForm = ({ isLogin, setIsLogin, toggleModal }) => {
             value={formData.email}
             onChange={handleChange}
             required
-            className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 bg-gray-100 text-gray-800"
           />
         </div>
         <div className="flex flex-col">
@@ -89,8 +89,7 @@ const AuthForm = ({ isLogin, setIsLogin, toggleModal }) => {
             name="password"
             value={formData.password}
             onChange={handleChange}
-            required
-            className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            requiredclassName="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 bg-gray-100 text-gray-800"className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
         </div>
         <button

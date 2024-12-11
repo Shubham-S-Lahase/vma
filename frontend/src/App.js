@@ -6,6 +6,7 @@ import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import MyVideos from "./pages/MyVideos";
 import VideoDetail from "./pages/VideoDetails";
+import Welcome from "./components/Welcome";
 
 const queryClient = new QueryClient();
 
@@ -16,6 +17,7 @@ function App() {
         <AuthProvider>
           <Routes>
             <Route path="/" element={<Layout />}>
+              <Route index element={<Welcome />} />
               <Route path="home" element={<Home />} />
               <Route path="my-videos" element={<MyVideos />} />
               <Route path="/videos/:id" element={<VideoDetail />} />
